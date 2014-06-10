@@ -10,8 +10,11 @@ class Board
 		create_board
 		until is_solved?
 			eleminiation
+			if impossible?
+				return "impissible"
+			end
 		end
-		print print_board
+		print_board
 	end
 
 	def create_board
@@ -104,7 +107,17 @@ class Board
 		game_board.map{|cell| cell.value}.flatten.length == 81
 	end
 
+	def impossible?
+		game_board.map{|x| x.value}.include?([])
+	end
+
 end
+
+
+
+
+
+
 
 class Cell
 	attr_accessor :value
