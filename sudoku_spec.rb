@@ -192,6 +192,21 @@ describe Board do
 		end
 	end
 
+	context '#need_guess' do
+		it 'should check if the board is the same' do
+			board.create_board
+			board.eleminiation
+			board.need_guess
+			expect(board.need_guess).to eq(true)
+		end
+
+		it 'should check if the board is the same' do
+			board.create_board
+			board.eleminiation
+			expect(board.need_guess).to eq(false)
+		end
+	end
+
 end
 
 

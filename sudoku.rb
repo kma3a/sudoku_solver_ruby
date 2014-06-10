@@ -112,6 +112,14 @@ class Board
 		game_board.map{|x| x.value}.include?([])
 	end
 
+	def need_guess
+		if previous_board == game_board.map {|cell| cell.value}
+			return true
+		end
+		self.previous_board = game_board.map {|cell| cell.value}
+		false
+	end
+
 end
 
 
