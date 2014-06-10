@@ -1,9 +1,10 @@
 class Board
-	attr_accessor :board, :game_board, :solved
+	attr_accessor :board, :game_board, :solved, :previous_board
 
 	def initialize(board)
 		@board = board.split("")
 		@game_board = []
+		@previous_board = []
 	end
 
 	def play
