@@ -13,6 +13,8 @@ class Board
 			eleminiation
 			if impossible?
 				return "impossible"
+			elsif need_guess
+				return "guess"
 			end
 		end
 		print_board

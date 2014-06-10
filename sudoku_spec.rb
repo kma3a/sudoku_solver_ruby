@@ -3,6 +3,7 @@ require_relative "sudoku"
 describe Board do
 	let(:board) {Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")}
 	let(:board_2) {Board.new("182345740050008019010000000800005000000804000000300006000000070030500080972400050")}
+	let(:board_3) {Board.new("302609005500730000000000900000940000000000109000057060008500006000000003019082040")}
 
 	context '#initialize' do
 		it "creates a Board object" do
@@ -108,6 +109,10 @@ describe Board do
 
 		it 'should return impossible if impossible' do
 			expect(board_2.play).to eq("impossible")
+		end
+
+		it 'should return go to need guess if need_guess' do
+			expect(board_3.play).to eq("guess")
 		end
 	end
 
