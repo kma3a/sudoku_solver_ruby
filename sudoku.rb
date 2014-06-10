@@ -12,7 +12,7 @@ class Board
 		until is_solved?
 			eleminiation
 			if impossible?
-				return "impissible"
+				return "impossible"
 			end
 		end
 		print_board
