@@ -212,6 +212,7 @@ describe Board do
 		end
 	end
 
+
 	#not completely sure how to trest >.<
 	# context '#brute_squad' do
 	# 	it 'should guess and keep going' do

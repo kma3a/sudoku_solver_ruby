@@ -11,6 +11,7 @@ class Board
 		play
 		print_board
 	end
+
 	def play
 		create_board
 		until is_solved?
@@ -136,17 +137,19 @@ class Board
 		index = brute_board.index {|index| index.value.is_a?(Array) && index.value.length == 2}
 		guess_1 = brute_board[index].value.shift
 		guess_2 = brute_board[index].value.pop
-		brute_board[index].value = guess_1
-		board = brute_board.map { |num| num.value}
-		solution = self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+		solution = try_guess(guess_1)
 		if solution
 			self.game_board = solution
 		else
-			brute_board[index].value = guess_2
-			board = brute_board.map { |num| num.value}
-	  	solution = self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+			solution = try_guess(guess_2)
 		end
 	end
+
+	def try_guess(guess)
+		brute_board[index].value = guess
+		board = brute_board.map { |num| num.value}
+		self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+	end	
 
 end
 
