@@ -2,6 +2,8 @@ require_relative "sudoku"
 
 describe Board do
 	let(:board) {Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")}
+	let(:board_2) {Board.new("182345740050008019010000000800005000000804000000300006000000070030500080972400050")}
+	let(:board_3) {Board.new("000689100800000029150000008403000050200005000090240801084700910500000060060410000")}
 
 	context '#initialize' do
 		it "creates a Board object" do
@@ -21,6 +23,13 @@ describe Board do
 		 it "should be an array" do
 		 	expect(board.board.is_a?(Array)).to eq(true)
 		 end
+	end
+
+	context '#previous_board' do
+		it "should be empty" do
+			board.create_board
+			expect(board.previous_board).to eq([])
+		end
 	end
 
 	context '#find_row' do
@@ -92,11 +101,19 @@ describe Board do
 		end
 	end
 
-	context '#play' do
+	context '#play!' do
 		it 'should solve the board' do
-			expect(board.play).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
+			expect(board.play!).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
 )
 		end
+
+		# it 'should return impossible if impossible' do
+		# 	expect(board_2.play).to eq(false)
+		# end
+
+		# it 'should return go to need guess if need_guess' do
+		# 	expect(board_3.play).to eq("guess")
+		# end
 	end
 
 	context '#print_board' do
@@ -171,6 +188,37 @@ describe Board do
 			expect(board.print_board).to eq([1, [4, 7], 5, 8, [3, 9], 2, [6, 7], [6, 7], [3, 7], [3, 8], 9, [3, 8], 1, 7, 6, 4, 2, 5, 2, 7, [3, 6], 4, [3, 5], 5, 8, 1, 9, [5, 8], 1, 9, [2, 5], [4, 5], 7, 3, [4, 8], 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, [3, 8], [4, 8], [3, 4, 8], [2, 9], 6, 1, [2, 7], 5, [2, 7, 8], [5, 8, 9], [2, 5, 8], 7, 6, [1, 4, 5, 9], [4, 9], 2, 3, 8, 4, 3, 8, [7, 9], 2, 9, 5, [6, 7], 1, 6, [2, 5], 1, 3, [4, 5], 8, 9, [4, 7], 7])
 		end
 	end
+
+	context '#impossible?' do
+		it 'should check if a board is impossible' do
+			board_2.create_board
+			board_2.eleminiation
+			expect(board_2.impossible?).to eq(true)
+		end
+	end
+
+	context '#need_guess' do
+		it 'should check if the board is the same' do
+			board.create_board
+			board.eleminiation
+			board.need_guess
+			expect(board.need_guess).to eq(true)
+		end
+
+		it 'should check if the board is the same' do
+			board.create_board
+			board.eleminiation
+			expect(board.need_guess).to eq(false)
+		end
+	end
+
+	#not completely sure how to trest >.<
+	# context '#brute_squad' do
+	# 	it 'should guess and keep going' do
+	# 		board_3.play
+	# 		expect(board_3.brute_squad).to eq("solved")
+	# 	end
+	# end
 
 end
 
