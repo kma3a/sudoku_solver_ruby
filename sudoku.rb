@@ -11,17 +11,22 @@ class Board
 		play
 		print_board
 	end
+
 	def play
 		create_board
 		until is_solved?
 			eleminiation
-			if impossible?
+			impossible_brute
+		end
+		game_board
+	end
+
+	def impossible_brute
+		if impossible?
 				return false
 			elsif need_guess
 				brute_squad
 			end
-		end
-		game_board
 	end
 
 	def create_board
@@ -132,17 +137,19 @@ class Board
 		index = brute_board.index {|index| index.value.is_a?(Array) && index.value.length == 2}
 		guess_1 = brute_board[index].value.shift
 		guess_2 = brute_board[index].value.pop
-		brute_board[index].value = guess_1
-		board = brute_board.map { |num| num.value}
-		solution = self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+		solution = try_guess(guess_1)
 		if solution
 			self.game_board = solution
 		else
-			brute_board[index].value = guess_2
-			board = brute_board.map { |num| num.value}
-	  	solution = self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+			solution = try_guess(guess_2)
 		end
 	end
+
+	def try_guess(guess)
+		brute_board[index].value = guess
+		board = brute_board.map { |num| num.value}
+		self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+	end	
 
 end
 
@@ -228,9 +235,8 @@ board_17 = Board.new("3026090055007300000000009000009400000000001090000570600085
 # p board_10.play
 # p board_11.play
 # p board_12.play
-p "guesses"
-p board_13.play!
-p board_14.play!
-p board_15.play!
-p board_16.play!
-p board_17.play!
+# p board_13.play!
+# p board_14.play!
+# p board_15.play!
+# p board_16.play!
+# p board_17.play!
