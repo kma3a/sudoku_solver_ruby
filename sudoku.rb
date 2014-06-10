@@ -15,13 +15,17 @@ class Board
 		create_board
 		until is_solved?
 			eleminiation
-			if impossible?
+			impossible_brute
+		end
+		game_board
+	end
+
+	def impossible_brute
+		if impossible?
 				return false
 			elsif need_guess
 				brute_squad
 			end
-		end
-		game_board
 	end
 
 	def create_board
@@ -228,9 +232,8 @@ board_17 = Board.new("3026090055007300000000009000009400000000001090000570600085
 # p board_10.play
 # p board_11.play
 # p board_12.play
-p "guesses"
-p board_13.play!
-p board_14.play!
-p board_15.play!
-p board_16.play!
-p board_17.play!
+# p board_13.play!
+# p board_14.play!
+# p board_15.play!
+# p board_16.play!
+# p board_17.play!
