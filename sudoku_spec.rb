@@ -1,4 +1,3 @@
-
 require_relative "sudoku"
 
 describe Board do
