@@ -7,17 +7,21 @@ class Board
 		@previous_board = []
 	end
 
+	def play!
+		play
+		print_board
+	end
 	def play
 		create_board
 		until is_solved?
 			eleminiation
 			if impossible?
-				return "impossible"
+				return false
 			elsif need_guess
-				return "guess"
+				brute_squad
 			end
 		end
-		print_board
+		game_board
 	end
 
 	def create_board
@@ -116,10 +120,28 @@ class Board
 
 	def need_guess
 		if previous_board == game_board.map {|cell| cell.value}
-			return true
+			true
+		else
+			self.previous_board = game_board.map {|cell| cell.value}
+			false
 		end
-		self.previous_board = game_board.map {|cell| cell.value}
-		false
+	end
+
+	def brute_squad
+		brute_board = game_board
+		index = brute_board.index {|index| index.value.is_a?(Array) && index.value.length == 2}
+		guess_1 = brute_board[index].value.shift
+		guess_2 = brute_board[index].value.pop
+		brute_board[index].value = guess_1
+		board = brute_board.map { |num| num.value}
+		solution = self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+		if solution
+			self.game_board = solution
+		else
+			brute_board[index].value = guess_2
+			board = brute_board.map { |num| num.value}
+	  	solution = self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+		end
 	end
 
 end
@@ -173,12 +195,12 @@ class Cell
 end
 
 
-board = Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")
-p board.play
+# board = Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")
+# p board.play
 
-board_2 = Board.new("302609005500730000000000900000940000000000109000057060008500006000000003019082040")
-p board_2.play
-p board_2.print_board
+# board_2 = Board.new("302609005500730000000000900000940000000000109000057060008500006000000003019082040")
+# p board_2.play
+# p board_2.print_board
 
 board_3 = Board.new("096040001100060004504810390007950043030080000405023018010630059059070830003590007")
 board_4 = Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")
@@ -196,20 +218,19 @@ board_15 = Board.new("0000754000000000080801900003000010600000000340000681702040
 board_16 = Board.new("300000000050703008000028070700000043000000000003904105400300800100040000968000200")
 board_17 = Board.new("302609005500730000000000900000940000000000109000057060008500006000000003019082040")
 
-p board_3.play 
-p board_4.play
-p board_5.play
-p board_6.play
-p board_7.play
-p board_8.play
-p board_9.play
-p board_10.play
-p board_11.play
-p board_12.play
+# p board_3.play 
+# p board_4.play
+# p board_5.play
+# p board_6.play
+# p board_7.play
+# p board_8.play
+# p board_9.play
+# p board_10.play
+# p board_11.play
+# p board_12.play
 p "guesses"
-p board_13.play
-p board_13.print_board
-p board_14.play
-p board_15.play
-p board_16.play
-p board_17.play
+p board_13.play!
+p board_14.play!
+p board_15.play!
+p board_16.play!
+p board_17.play!

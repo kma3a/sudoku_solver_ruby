@@ -3,7 +3,7 @@ require_relative "sudoku"
 describe Board do
 	let(:board) {Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")}
 	let(:board_2) {Board.new("182345740050008019010000000800005000000804000000300006000000070030500080972400050")}
-	let(:board_3) {Board.new("302609005500730000000000900000940000000000109000057060008500006000000003019082040")}
+	let(:board_3) {Board.new("000689100800000029150000008403000050200005000090240801084700910500000060060410000")}
 
 	context '#initialize' do
 		it "creates a Board object" do
@@ -101,19 +101,19 @@ describe Board do
 		end
 	end
 
-	context '#play' do
+	context '#play!' do
 		it 'should solve the board' do
-			expect(board.play).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
+			expect(board.play!).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
 )
 		end
 
-		it 'should return impossible if impossible' do
-			expect(board_2.play).to eq("impossible")
-		end
+		# it 'should return impossible if impossible' do
+		# 	expect(board_2.play).to eq(false)
+		# end
 
-		it 'should return go to need guess if need_guess' do
-			expect(board_3.play).to eq("guess")
-		end
+		# it 'should return go to need guess if need_guess' do
+		# 	expect(board_3.play).to eq("guess")
+		# end
 	end
 
 	context '#print_board' do
@@ -211,6 +211,14 @@ describe Board do
 			expect(board.need_guess).to eq(false)
 		end
 	end
+
+	#not completely sure how to trest >.<
+	# context '#brute_squad' do
+	# 	it 'should guess and keep going' do
+	# 		board_3.play
+	# 		expect(board_3.brute_squad).to eq("solved")
+	# 	end
+	# end
 
 end
 
