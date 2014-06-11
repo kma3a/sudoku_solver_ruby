@@ -335,7 +335,7 @@ end
 
 describe Controller do
 	let(:controll) {Controller.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")}
-
+	let(:false_control) {Controller.new("2klsdfl lsfjslkef 323")}
 	context '#initialize' do
 		it 'should create and instance of controller' do
 			expect(Controller.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")).to be_an_instance_of(Controller)
@@ -352,9 +352,14 @@ describe Controller do
 		end
 	end
 
-	# context '#check_params' do
-	# 	it 'should check if params does not have any numbers' do
-	# 		expect(controll.check_params).to be(true)
-	# 	end
-	# end
+	context '#check_params' do
+		it 'should check if params does not have any numbers' do
+			expect(controll.check_params).to be(true)
+		end
+
+		it 'should be false if there is numbers' do
+			expect(false_control.check_params).to eq(false)
+		end
+
+	end
 end

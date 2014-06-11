@@ -210,9 +210,12 @@ class Controller
 		
 	end
 
-	# def check_params
-
-	# end
+	def check_params
+		if input.match(/\D/)
+			return false
+		end
+		true
+	end
 
 end
 
