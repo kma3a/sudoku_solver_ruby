@@ -209,6 +209,15 @@ class Controller
 		@input = param
 	end
 
+	def solve
+		if check_params && is_not_nil? && check_length
+			board = Board.new(input).play!
+			Views::BoardView.render(board)
+		else
+			Views::Error.render
+		end
+	end
+
 	def check_params
 		if input.match(/\D/)
 			return false
@@ -223,21 +232,52 @@ class Controller
 		true
 	end
 
-	def solve
-		if check_params && is_not_nil?
-			return Board.new(input).play!
+	def check_length
+		unless input.length == 81
+			return false
 		end
-		error_message
+		true
 	end
 
-	def error_message
-		"input must contain no punctuation, letters or spaces"
+
+	# def error_message
+	# 	"input must contain no punctuation, letters or spaces"
+	# end
+
+end
+
+module Views
+	class Error
+		def self.render
+			"input must contain no punctuation, letters or spaces and equal 81"
+		end
+	end
+
+	class BoardView
+		def self.render(input)
+			board = input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
+			board_string = "-------------\n"
+			board.each do |part|
+				part.each do |line|
+					line_str = "|"
+					line.each do |triple|
+						triple.each do |num|
+							line_str << "#{num}"
+						end
+						line_str << "|"
+					end
+					board_string << line_str << "\n"
+				end
+				board_string << "-------------\n"
+			end
+			board_string
+		end
 	end
 
 end
 
 con = Controller.new(ARGV[0])
-p con.solve
+puts con.solve
 
 
 # # board = Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")
