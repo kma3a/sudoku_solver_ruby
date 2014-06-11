@@ -331,3 +331,61 @@ describe Cell do
 	end
 
 end
+
+
+describe Controller do
+	let(:controll) {Controller.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")}
+	let(:false_control) {Controller.new("2klsdfl lsfjslkef 323")}
+	let(:nil_control) {Controller.new("")}
+
+	context '#initialize' do
+		it 'should create and instance of controller' do
+			expect(controll).to be_an_instance_of(Controller)
+		end
+
+		it 'should take a parameter' do
+			expect{Controller.new}.to raise_error(ArgumentError)
+		end
+	end
+
+	context '#input' do
+		it 'should be a string' do
+			expect(controll.input.is_a?(String)).to eq(true)
+		end
+	end
+
+	context '#check_params' do
+		it 'should check if params does not have any numbers' do
+			expect(controll.check_params).to be(true)
+		end
+
+		it 'should be false if there is numbers' do
+			expect(false_control.check_params).to be(false)
+		end
+	end
+
+	context '#is_not_nil?' do
+		it 'should check if input is nil' do
+			expect(nil_control.is_not_nil?).to be(false)
+		end
+
+		it 'should be true if not nil' do
+			expect(controll.is_not_nil?).to be(true)
+		end
+	end
+
+	context '#solve' do
+		it 'should send the info over and solve the game if valid input' do
+			expect(controll.solve).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
+)
+		end
+
+		it 'should not solve if not valid input' do
+			expect(nil_control.solve).to be(false)
+		end
+
+		it 'should also not for the other solution' do
+			expect(false_control.solve).to be(false)
+		end
+	end
+end
