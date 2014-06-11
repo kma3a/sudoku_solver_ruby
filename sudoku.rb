@@ -227,7 +227,11 @@ class Controller
 		if check_params && is_not_nil?
 			return Board.new(input).play!
 		end
-		false
+		error_message
+	end
+
+	def error_message
+		"input must contain no punctuation, letters or spaces"
 	end
 
 end

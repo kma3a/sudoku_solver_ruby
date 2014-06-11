@@ -381,11 +381,17 @@ describe Controller do
 		end
 
 		it 'should not solve if not valid input' do
-			expect(nil_control.solve).to be(false)
+			expect(nil_control.solve).to eq("input must contain no punctuation, letters or spaces")
 		end
 
 		it 'should also not for the other solution' do
-			expect(false_control.solve).to be(false)
+			expect(false_control.solve).to eq("input must contain no punctuation, letters or spaces")
+		end
+	end
+
+	context '#error_message' do
+		it 'should print text' do
+			expect(nil_control.error_message).to eq("input must contain no punctuation, letters or spaces")		
 		end
 	end
 end
