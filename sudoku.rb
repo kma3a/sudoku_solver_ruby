@@ -225,9 +225,11 @@ class Controller
 
 	def solve
 		if check_params && is_not_nil?
-			return Board.new(input).play!
+			board = Board.new(input).play!
+			Views::BoardView.render(board)
+		else
+			Views::Error.render
 		end
-		Views::Error.render
 	end
 
 	# def error_message
@@ -267,7 +269,7 @@ module Views
 end
 
 con = Controller.new(ARGV[0])
-p con.solve
+puts con.solve
 
 
 # # board = Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")
