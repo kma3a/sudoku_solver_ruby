@@ -203,11 +203,16 @@ end
 
 
 class Controller
-	attr_accessor :string
+	attr_accessor :input
 
 	def initialize(param)
-		@string = param
+		@input = param
+		
 	end
+
+	# def check_params
+
+	# end
 
 end
 

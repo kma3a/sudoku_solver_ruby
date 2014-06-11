@@ -334,10 +334,27 @@ end
 
 
 describe Controller do
+	let(:controll) {Controller.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")}
 
 	context '#initialize' do
+		it 'should create and instance of controller' do
+			expect(Controller.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")).to be_an_instance_of(Controller)
+		end
+
 		it 'should take a parameter' do
 			expect{Controller.new}.to raise_error(ArgumentError)
 		end
 	end
+
+	context '#input' do
+		it 'should be a string' do
+			expect(controll.input.is_a?(String)).to eq(true)
+		end
+	end
+
+	# context '#check_params' do
+	# 	it 'should check if params does not have any numbers' do
+	# 		expect(controll.check_params).to be(true)
+	# 	end
+	# end
 end
