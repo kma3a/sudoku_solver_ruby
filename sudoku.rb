@@ -24,9 +24,9 @@ class Board
 	def impossible_brute
 		if impossible?
 				return false
-			elsif need_guess
+		elsif need_guess
 				brute_squad
-			end
+		end
 	end
 
 	def create_board
@@ -141,15 +141,15 @@ class Board
 		index = brute_board.index {|index| index.value.is_a?(Array) && index.value.length == 2}
 		guess_1 = brute_board[index].value.shift
 		guess_2 = brute_board[index].value.pop
-		solution = try_guess(guess_1)
+		solution = try_guess(brute_board, index, guess_1)
 		if solution
 			self.game_board = solution
 		else
-			solution = try_guess(guess_2)
+			solution = try_guess(brute_board, index, guess_2)
 		end
 	end
 
-	def try_guess(guess)
+	def try_guess(brute_board, index, guess)
 		brute_board[index].value = guess
 		board = brute_board.map { |num| num.value}
 		self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
@@ -265,10 +265,7 @@ module Views
 				part.each do |line|
 					line_str = "|"
 					line.each do |triple|
-						triple.each do |num|
-							line_str << "#{num}"
-						end
-						line_str << "|"
+						line_str << trip_string(triple) << "|"
 					end
 					board_string << line_str << "\n"
 				end
@@ -276,7 +273,17 @@ module Views
 			end
 			board_string
 		end
+
+		def self.trip_string(triple)
+			string = ""
+			triple.each do |num|
+				string << "#{num}"
+			end
+			string
+		end
 	end
+
+
 
 end
 
