@@ -202,6 +202,16 @@ class Cell
 end
 
 
+class Controller
+	attr_accessor :string
+
+	def initialize(param)
+		@string = param
+	end
+
+end
+
+
 # board = Board.new("105802000090076405200400819019007306762083090000061050007600030430020501600308900")
 # p board.play
 

@@ -331,3 +331,13 @@ describe Cell do
 	end
 
 end
+
+
+describe Controller do
+
+	context '#initialize' do
+		it 'should take a parameter' do
+			expect{Controller.new}.to raise_error(ArgumentError)
+		end
+	end
+end
