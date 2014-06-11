@@ -209,6 +209,15 @@ class Controller
 		@input = param
 	end
 
+	def solve
+		if check_params && is_not_nil? && check_length
+			board = Board.new(input).play!
+			Views::BoardView.render(board)
+		else
+			Views::Error.render
+		end
+	end
+
 	def check_params
 		if input.match(/\D/)
 			return false
@@ -223,14 +232,13 @@ class Controller
 		true
 	end
 
-	def solve
-		if check_params && is_not_nil?
-			board = Board.new(input).play!
-			Views::BoardView.render(board)
-		else
-			Views::Error.render
+	def check_length
+		unless input.length == 81
+			return false
 		end
+		true
 	end
+
 
 	# def error_message
 	# 	"input must contain no punctuation, letters or spaces"
@@ -241,7 +249,7 @@ end
 module Views
 	class Error
 		def self.render
-			"input must contain no punctuation, letters or spaces"
+			"input must contain no punctuation, letters or spaces and equal 81"
 		end
 	end
 
