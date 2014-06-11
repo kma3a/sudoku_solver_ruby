@@ -89,30 +89,34 @@ class Board
 		row = []
 		game_board.each do |cell| 
 			if cell.row == row_num
-				row << cell.value unless cell.value.is_a?(Array)
+				row << unless_array(cell)
 			end
 		end
-		row
+		row.compact
 	end
 
 	def get_col(col_num)
 		col = []
 		game_board.each do |cell| 
 			if cell.col == col_num
-				col << cell.value unless cell.value.is_a?(Array)
+				col << unless_array(cell)
 			end
 		end
-		col
+		col.compact
 	end
 
 	def get_box(box_num)
 		box = []
 		game_board.each do |cell| 
 			if cell.box == box_num
-				box << cell.value unless cell.value.is_a?(Array)
+				box << unless_array(cell)
 			end
 		end
-		box
+		box.compact
+	end
+
+	def unless_array(cell)
+		cell.value unless cell.value.is_a?(Array)
 	end
 
 	def is_solved?

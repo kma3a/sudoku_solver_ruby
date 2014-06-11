@@ -166,6 +166,17 @@ describe Board do
 		end
 	end
 
+	context '#unless_array' do
+		it 'should give the value inless array' do
+			board.create_board
+			expect(board.unless_array(board.game_board[0])).to eq(1)
+		end
+
+		it 'should not give anything is not an array' do
+			board.create_board
+			expect(board.unless_array(board.game_board[1])).to eq(nil)
+		end
+	end
 	context '#is_solved?' do
 		it 'should check to see if the board is solved' do
 			board.create_board
