@@ -103,8 +103,7 @@ describe Board do
 
 	context '#play!' do
 		it 'should solve the board' do
-			expect(board.play!).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
-)
+			expect(board.play!).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7])
 		end
 
 		# it 'should return impossible if impossible' do
@@ -376,7 +375,7 @@ describe Controller do
 
 	context '#solve' do
 		it 'should send the info over and solve the game if valid input' do
-			expect(controll.solve).to eq("145892673893176425276435819519247386762583194384961752957614238438729561621358947")
+			expect(controll.solve).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7])
 		end
 
 		it 'should not solve if not valid input' do
@@ -401,4 +400,9 @@ describe "Views" do
 	it 'should give an error message if input is not right' do
 		expect(Views::Error.render).to eq("input must contain no punctuation, letters or spaces")
 	end
+
+	it 'should print out the string in a sudoku form' do
+		expect(Views::BoardView.render([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7])).to eq("-------------\n|145|892|673|\n|893|176|425|\n|276|435|819|\n-------------\n|519|247|386|\n|762|583|194|\n|384|961|752|\n-------------\n|957|614|238|\n|438|729|561|\n|621|358|947|\n-------------\n")
+	end
+
 end
