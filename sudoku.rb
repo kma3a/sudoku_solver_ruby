@@ -207,7 +207,6 @@ class Controller
 
 	def initialize(param)
 		@input = param
-		
 	end
 
 	def check_params
@@ -215,6 +214,20 @@ class Controller
 			return false
 		end
 		true
+	end
+
+	def is_not_nil?
+		if input == ""
+			return false
+		end
+		true
+	end
+
+	def solve
+		if check_params && is_not_nil?
+			return Board.new(input).play!
+		end
+		false
 	end
 
 end
