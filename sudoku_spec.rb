@@ -376,8 +376,7 @@ describe Controller do
 
 	context '#solve' do
 		it 'should send the info over and solve the game if valid input' do
-			expect(controll.solve).to eq([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7] 
-)
+			expect(controll.solve).to eq("145892673893176425276435819519247386762583194384961752957614238438729561621358947")
 		end
 
 		it 'should not solve if not valid input' do
@@ -389,9 +388,17 @@ describe Controller do
 		end
 	end
 
-	context '#error_message' do
-		it 'should print text' do
-			expect(nil_control.error_message).to eq("input must contain no punctuation, letters or spaces")		
-		end
+	# context '#error_message' do
+	# 	it 'should print text' do
+	# 		expect(nil_control.).to eq("input must contain no punctuation, letters or spaces")		
+	# 	end
+	# end
+end
+
+describe "Views" do
+	extend Views
+
+	it 'should give an error message if input is not right' do
+		expect(Views::Error.render).to eq("input must contain no punctuation, letters or spaces")
 	end
 end

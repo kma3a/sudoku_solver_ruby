@@ -225,13 +225,22 @@ class Controller
 
 	def solve
 		if check_params && is_not_nil?
-			return Board.new(input).play!
+			return Board.new(input).play!.join
 		end
-		error_message
+		Views::Error.render
 	end
 
 	def error_message
 		"input must contain no punctuation, letters or spaces"
+	end
+
+end
+
+module Views
+	class Error
+		def self.render
+			"input must contain no punctuation, letters or spaces"
+		end
 	end
 
 end
