@@ -94,7 +94,7 @@ class Board
 	end
 
 	def get_array_of_all(index)
-		(get_row(cell_row(game_board[index])) + get_col(game_board[index].col) + get_box(game_board[index].box) ).uniq.sort
+		(get_row(cell_row(game_board[index])) + get_col(cell_col(game_board[index])) + get_box(game_board[index].box) ).uniq.sort
 	end
 
 	def get_row(row_num)
@@ -108,7 +108,7 @@ class Board
 	def get_col(col_num)
 		col = []
 		game_board.each do |cell| 
-			col << unless_array(cell) if cell.col == col_num
+			col << unless_array(cell) if cell_col(cell) == col_num
 		end
 		col.compact
 	end
