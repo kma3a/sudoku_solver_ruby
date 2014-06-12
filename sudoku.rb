@@ -47,6 +47,10 @@ class Board
 		cell.value
 	end
 
+	def cell_row(cell)
+		cell.row
+	end
+
 	def find_row(index)
 		index/ 9 + 1
 	end

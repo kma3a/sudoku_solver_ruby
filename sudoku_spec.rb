@@ -238,6 +238,13 @@ describe Board do
 		end
 	end
 
+	context '#cell_row' do
+		it 'should give the cell row' do
+			board.create_board
+			expect(board.cell_row(board.game_board[12])).to eq(2)
+		end
+	end
+
 end
 
 
