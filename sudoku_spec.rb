@@ -434,4 +434,8 @@ describe "Views" do
 		expect(Views::BoardView.trip_string([1,2,3])).to eq("123")
 	end
 
+	it 'should give the 3 triple and a |' do
+		expect(Views::BoardView.row_string([[1,2,3,],[1,2,3],[1,2,3]])).to eq('123|123|123|')
+	end
+
 end

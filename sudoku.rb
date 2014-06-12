@@ -264,9 +264,7 @@ module Views
 			board.each do |part|
 				part.each do |line|
 					line_str = "|"
-					line.each do |triple|
-						line_str << trip_string(triple) << "|"
-					end
+					line_str << row_string(line)
 					board_string << line_str << "\n"
 				end
 				board_string << "-------------\n"
@@ -280,6 +278,14 @@ module Views
 				string << "#{num}"
 			end
 			string
+		end
+
+		def self.row_string(line)
+			line_str = ''
+			line.each do |triple|
+				line_str << trip_string(triple) << "|"
+			end
+			line_str
 		end
 	end
 
