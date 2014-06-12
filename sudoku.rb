@@ -23,9 +23,9 @@ class Board
 
 	def impossible_brute
 		if impossible?
-				return false
+			return false
 		elsif need_guess
-				brute_squad
+			brute_squad
 		end
 	end
 
@@ -88,9 +88,7 @@ class Board
 	def get_row(row_num)
 		row = []
 		game_board.each do |cell| 
-			if cell.row == row_num
-				row << unless_array(cell)
-			end
+			row << unless_array(cell) if cell.row == row_num
 		end
 		row.compact
 	end
@@ -98,9 +96,7 @@ class Board
 	def get_col(col_num)
 		col = []
 		game_board.each do |cell| 
-			if cell.col == col_num
-				col << unless_array(cell)
-			end
+			col << unless_array(cell) if cell.col == col_num
 		end
 		col.compact
 	end
@@ -108,9 +104,7 @@ class Board
 	def get_box(box_num)
 		box = []
 		game_board.each do |cell| 
-			if cell.box == box_num
-				box << unless_array(cell)
-			end
+			box << unless_array(cell) if cell.box == box_num
 		end
 		box.compact
 	end
