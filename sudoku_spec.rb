@@ -166,6 +166,17 @@ describe Board do
 		end
 	end
 
+	context '#unless_array' do
+		it 'should give the value inless array' do
+			board.create_board
+			expect(board.unless_array(board.game_board[0])).to eq(1)
+		end
+
+		it 'should not give anything is not an array' do
+			board.create_board
+			expect(board.unless_array(board.game_board[1])).to eq(nil)
+		end
+	end
 	context '#is_solved?' do
 		it 'should check to see if the board is solved' do
 			board.create_board
@@ -401,6 +412,16 @@ describe Controller do
 		end
 	end
 
+	context '#check_false' do
+		it 'should send to views::impossible if false' do
+			expect(controll.check_false(false)).to eq("INCONCEIVABLE!!!")
+		end
+
+		it 'should print board if given an array' do
+			expect(controll.check_false([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7])).to eq("-------------\n|145|892|673|\n|893|176|425|\n|276|435|819|\n-------------\n|519|247|386|\n|762|583|194|\n|384|961|752|\n-------------\n|957|614|238|\n|438|729|561|\n|621|358|947|\n-------------\n")
+		end
+	end
+
 	# context '#error_message' do
 	# 	it 'should print text' do
 	# 		expect(nil_control.).to eq("input must contain no punctuation, letters or spaces")		
@@ -415,8 +436,32 @@ describe "Views" do
 		expect(Views::Error.render).to eq("input must contain no punctuation, letters or spaces and equal 81")
 	end
 
+	it 'should give impossile if it is an impossile board' do
+		expect(Views::Impossible.render).to eq("INCONCEIVABLE!!!")
+	end
+
 	it 'should print out the string in a sudoku form' do
 		expect(Views::BoardView.render([1, 4, 5, 8, 9, 2, 6, 7, 3, 8, 9, 3, 1, 7, 6, 4, 2, 5, 2, 7, 6, 4, 3, 5, 8, 1, 9, 5, 1, 9, 2, 4, 7, 3, 8, 6, 7, 6, 2, 5, 8, 3, 1, 9, 4, 3, 8, 4, 9, 6, 1, 7, 5, 2, 9, 5, 7, 6, 1, 4, 2, 3, 8, 4, 3, 8, 7, 2, 9, 5, 6, 1, 6, 2, 1, 3, 5, 8, 9, 4, 7])).to eq("-------------\n|145|892|673|\n|893|176|425|\n|276|435|819|\n-------------\n|519|247|386|\n|762|583|194|\n|384|961|752|\n-------------\n|957|614|238|\n|438|729|561|\n|621|358|947|\n-------------\n")
+	end
+
+	it 'should split the array so it has many smaller arrays for parts, lines, and triples' do
+		expect(Views::BoardView.split_array([1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3])).to eq([[[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]],[[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]],[[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]]])
+	end
+
+	it 'should have a string of 3 be printed as such' do
+		expect(Views::BoardView.trip_string([1,2,3])).to eq("123")
+	end
+
+	it 'should give the 3 triple and a |' do
+		expect(Views::BoardView.row_string([[1,2,3,],[1,2,3],[1,2,3]])).to eq('123|123|123|')
+	end
+
+	it 'should give a part' do
+		expect(Views::BoardView.part_string([[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]] )).to eq("|123|123|123|\n|123|123|123|\n|123|123|123|\n")
+	end
+
+	it 'should go through and present the board as a string' do
+		expect(Views::BoardView.board_to_string([[[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]],[[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]],[[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]]]])).to eq("|123|123|123|\n|123|123|123|\n|123|123|123|\n-------------\n|123|123|123|\n|123|123|123|\n|123|123|123|\n-------------\n|123|123|123|\n|123|123|123|\n|123|123|123|\n-------------\n")
 	end
 
 end

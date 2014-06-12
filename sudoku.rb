@@ -23,10 +23,10 @@ class Board
 
 	def impossible_brute
 		if impossible?
-				return false
-			elsif need_guess
-				brute_squad
-			end
+			return false
+		elsif need_guess
+			brute_squad
+		end
 	end
 
 	def create_board
@@ -88,31 +88,29 @@ class Board
 	def get_row(row_num)
 		row = []
 		game_board.each do |cell| 
-			if cell.row == row_num
-				row << cell.value unless cell.value.is_a?(Array)
-			end
+			row << unless_array(cell) if cell.row == row_num
 		end
-		row
+		row.compact
 	end
 
 	def get_col(col_num)
 		col = []
 		game_board.each do |cell| 
-			if cell.col == col_num
-				col << cell.value unless cell.value.is_a?(Array)
-			end
+			col << unless_array(cell) if cell.col == col_num
 		end
-		col
+		col.compact
 	end
 
 	def get_box(box_num)
 		box = []
 		game_board.each do |cell| 
-			if cell.box == box_num
-				box << cell.value unless cell.value.is_a?(Array)
-			end
+			box << unless_array(cell) if cell.box == box_num
 		end
-		box
+		box.compact
+	end
+
+	def unless_array(cell)
+		cell.value unless cell.value.is_a?(Array)
 	end
 
 	def is_solved?
@@ -137,15 +135,15 @@ class Board
 		index = brute_board.index {|index| index.value.is_a?(Array) && index.value.length == 2}
 		guess_1 = brute_board[index].value.shift
 		guess_2 = brute_board[index].value.pop
-		solution = try_guess(guess_1)
+		solution = try_guess(brute_board, index, guess_1)
 		if solution
 			self.game_board = solution
 		else
-			solution = try_guess(guess_2)
+			solution = try_guess(brute_board, index, guess_2)
 		end
 	end
 
-	def try_guess(guess)
+	def try_guess(brute_board, index, guess)
 		brute_board[index].value = guess
 		board = brute_board.map { |num| num.value}
 		self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
@@ -212,10 +210,17 @@ class Controller
 	def solve
 		if check_params && is_not_nil? && check_length
 			board = Board.new(input).play!
-			Views::BoardView.render(board)
+			check_false(board)
 		else
 			Views::Error.render
 		end
+	end
+
+	def check_false(board)
+		unless board == false
+			return Views::BoardView.render(board)
+		end
+		Views::Impossible.render
 	end
 
 	def check_params
@@ -253,26 +258,61 @@ module Views
 		end
 	end
 
+	class Impossible
+		def self.render
+			"INCONCEIVABLE!!!"
+		end
+	end
+
 	class BoardView
 		def self.render(input)
-			board = input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
+			board = split_array(input)
 			board_string = "-------------\n"
+			board_string << board_to_string(board)
+			board_string
+		end
+
+		def self.split_array(input)
+			input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
+		end
+
+		def self.board_to_string(board)
+			board_string = ''
 			board.each do |part|
-				part.each do |line|
-					line_str = "|"
-					line.each do |triple|
-						triple.each do |num|
-							line_str << "#{num}"
-						end
-						line_str << "|"
-					end
-					board_string << line_str << "\n"
-				end
-				board_string << "-------------\n"
+				board_string << part_string(part) << "-------------\n"
 			end
 			board_string
 		end
+
+		def self.part_string(part)
+			board_string = ''
+			part.each do |line|
+				line_str = "|"
+				line_str << row_string(line)
+				board_string << line_str << "\n"
+			end
+			board_string
+		end
+
+		def self.row_string(line)
+			line_str = ''
+			line.each do |triple|
+				line_str << trip_string(triple) << "|"
+			end
+			line_str
+		end
+
+		def self.trip_string(triple)
+			string = ""
+			triple.each do |num|
+				string << "#{num}"
+			end
+			string
+		end
+
 	end
+
+
 
 end
 
