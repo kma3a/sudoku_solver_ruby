@@ -245,6 +245,13 @@ describe Board do
 		end
 	end
 
+	context '#cell_col' do
+		it 'should give the cell col' do
+			board.create_board
+			expect(board.cell_col(board.game_board[12])).to eq(4)
+		end
+	end
+
 end
 
 

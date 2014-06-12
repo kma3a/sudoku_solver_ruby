@@ -51,6 +51,10 @@ class Board
 		cell.row
 	end
 
+	def cell_col(cell)
+		cell.col
+	end
+
 	def find_row(index)
 		index/ 9 + 1
 	end
