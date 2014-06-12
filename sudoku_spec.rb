@@ -438,4 +438,8 @@ describe "Views" do
 		expect(Views::BoardView.row_string([[1,2,3,],[1,2,3],[1,2,3]])).to eq('123|123|123|')
 	end
 
+	it 'should give a part' do
+		expect(Views::BoardView.part_string([ [[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]],[[1,2,3],[1,2,3],[1,2,3]] ] )).to eq("|123|123|123|\n|123|123|123|\n|123|123|123|\n")
+	end
+
 end

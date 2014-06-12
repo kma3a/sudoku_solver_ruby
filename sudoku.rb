@@ -262,12 +262,7 @@ module Views
 			board = input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
 			board_string = "-------------\n"
 			board.each do |part|
-				part.each do |line|
-					line_str = "|"
-					line_str << row_string(line)
-					board_string << line_str << "\n"
-				end
-				board_string << "-------------\n"
+				board_string << part_string(part) << "-------------\n"
 			end
 			board_string
 		end
@@ -286,6 +281,16 @@ module Views
 				line_str << trip_string(triple) << "|"
 			end
 			line_str
+		end
+
+		def self.part_string(part)
+			board_string = ''
+			part.each do |line|
+				line_str = "|"
+				line_str << row_string(line)
+				board_string << line_str << "\n"
+			end
+			board_string
 		end
 	end
 
