@@ -231,6 +231,34 @@ describe Board do
 	# 	end
 	# end
 
+	context '#cell_value' do
+		it 'should return the value of a cell' do
+			board.create_board
+			expect(board.cell_value(board.game_board[0])).to eq(1)
+		end
+	end
+
+	context '#cell_row' do
+		it 'should give the cell row' do
+			board.create_board
+			expect(board.cell_row(board.game_board[12])).to eq(2)
+		end
+	end
+
+	context '#cell_col' do
+		it 'should give the cell col' do
+			board.create_board
+			expect(board.cell_col(board.game_board[12])).to eq(4)
+		end
+	end
+
+	context '#cell_box' do
+		it 'should give the cell box' do
+			board.create_board
+			expect(board.cell_box(board.game_board[12])).to eq(2)
+		end
+	end
+
 end
 
 
