@@ -210,10 +210,17 @@ class Controller
 	def solve
 		if check_params && is_not_nil? && check_length
 			board = Board.new(input).play!
-			Views::BoardView.render(board)
+			check_false(board)
 		else
 			Views::Error.render
 		end
+	end
+
+	def check_false(board)
+		unless board == false
+			return Views::BoardView.render(board)
+		end
+		Views::Impossible.render
 	end
 
 	def check_params
@@ -248,6 +255,12 @@ module Views
 	class Error
 		def self.render
 			"input must contain no punctuation, letters or spaces and equal 81"
+		end
+	end
+
+	class Impossible
+		def self.render
+			"INCONCEIVABLE!!!"
 		end
 	end
 
