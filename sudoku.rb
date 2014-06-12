@@ -261,26 +261,16 @@ module Views
 		def self.render(input)
 			board = input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
 			board_string = "-------------\n"
+			board_string << board_to_string(board)
+			board_string
+		end
+
+		def self.board_to_string(board)
+			board_string = ''
 			board.each do |part|
 				board_string << part_string(part) << "-------------\n"
 			end
 			board_string
-		end
-
-		def self.trip_string(triple)
-			string = ""
-			triple.each do |num|
-				string << "#{num}"
-			end
-			string
-		end
-
-		def self.row_string(line)
-			line_str = ''
-			line.each do |triple|
-				line_str << trip_string(triple) << "|"
-			end
-			line_str
 		end
 
 		def self.part_string(part)
@@ -292,6 +282,23 @@ module Views
 			end
 			board_string
 		end
+
+		def self.row_string(line)
+			line_str = ''
+			line.each do |triple|
+				line_str << trip_string(triple) << "|"
+			end
+			line_str
+		end
+
+		def self.trip_string(triple)
+			string = ""
+			triple.each do |num|
+				string << "#{num}"
+			end
+			string
+		end
+
 	end
 
 
