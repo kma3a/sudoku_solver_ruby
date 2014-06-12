@@ -43,6 +43,10 @@ class Board
 		end
 	end
 
+	def cell_value(cell)
+		cell.value
+	end
+
 	def find_row(index)
 		index/ 9 + 1
 	end
@@ -65,7 +69,7 @@ class Board
 	end
 
 	def print_board
-		board = game_board.map {|cell| cell.value}
+		board = game_board.map {|cell| cell_value(cell)}
 	end
 
 	def eleminiation
@@ -75,10 +79,10 @@ class Board
 	end
 
 	def update_cell(index)
-		if game_board[index].value.is_a?(Array)
+		if cell_value(game_board[index]).is_a?(Array)
 			game_board[index].control(get_array_of_all(index))
 		end
-		game_board[index].value
+		cell_value(game_board[index])
 	end
 
 	def get_array_of_all(index)
@@ -110,31 +114,31 @@ class Board
 	end
 
 	def unless_array(cell)
-		cell.value unless cell.value.is_a?(Array)
+		cell.value unless cell_value(cell).is_a?(Array)
 	end
 
 	def is_solved?
-		game_board.map{|cell| cell.value}.flatten.length == 81
+		game_board.map{|cell| cell_value(cell)}.flatten.length == 81
 	end
 
 	def impossible?
-		game_board.map{|x| x.value}.include?([])
+		game_board.map{|x| cell_value(x)}.include?([])
 	end
 
 	def need_guess
-		if previous_board == game_board.map {|cell| cell.value}
+		if previous_board == game_board.map {|cell| cell_value(cell)}
 			true
 		else
-			self.previous_board = game_board.map {|cell| cell.value}
+			self.previous_board = game_board.map {|cell| cell_value(cell)}
 			false
 		end
 	end
 
 	def brute_squad
 		brute_board = game_board
-		index = brute_board.index {|index| index.value.is_a?(Array) && index.value.length == 2}
-		guess_1 = brute_board[index].value.shift
-		guess_2 = brute_board[index].value.pop
+		index = brute_board.index {|index| cell_value(index).is_a?(Array) && cell_value(index).length == 2}
+		guess_1 = cell_value(brute_board[index]).shift
+		guess_2 = cell_value(brute_board[index]).pop
 		solution = try_guess(brute_board, index, guess_1)
 		if solution
 			self.game_board = solution
@@ -145,8 +149,8 @@ class Board
 
 	def try_guess(brute_board, index, guess)
 		brute_board[index].value = guess
-		board = brute_board.map { |num| num.value}
-		self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
+		board = brute_board.map { |num| cell_value(num)}
+		self.class.new(board.map{|cell| cell_value(cell).is_a?(Array) ? cell = 0 : cell}.join).play
 	end	
 
 end

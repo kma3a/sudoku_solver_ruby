@@ -231,6 +231,13 @@ describe Board do
 	# 	end
 	# end
 
+	context '#cell_value' do
+		it 'should return the value of a cell' do
+			board.create_board
+			expect(board.cell_value(board.game_board[0])).to eq(1)
+		end
+	end
+
 end
 
 
