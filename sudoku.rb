@@ -259,10 +259,14 @@ module Views
 
 	class BoardView
 		def self.render(input)
-			board = input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
+			board = split_array(input)
 			board_string = "-------------\n"
 			board_string << board_to_string(board)
 			board_string
+		end
+
+		def self.split_array(input)
+			input.map{|x| x.is_a?(Array) ? " " : x }.each_slice(3).to_a.each_slice(3).to_a.each_slice(3).to_a
 		end
 
 		def self.board_to_string(board)
