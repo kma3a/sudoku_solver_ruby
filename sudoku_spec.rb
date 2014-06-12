@@ -252,6 +252,13 @@ describe Board do
 		end
 	end
 
+	context '#cell_box' do
+		it 'should give the cell box' do
+			board.create_board
+			expect(board.cell_box(board.game_board[12])).to eq(2)
+		end
+	end
+
 end
 
 
