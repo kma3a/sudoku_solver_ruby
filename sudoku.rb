@@ -162,7 +162,7 @@ class Board
 	def try_guess(brute_board, index, guess)
 		brute_board[index].value = guess
 		board = brute_board.map { |num| cell_value(num)}
-		self.class.new(board.map{|cell| cell_value(cell).is_a?(Array) ? cell = 0 : cell}.join).play
+		self.class.new(board.map{|cell| cell.is_a?(Array) ? cell = 0 : cell}.join).play
 	end	
 
 end
